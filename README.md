@@ -28,7 +28,7 @@ Task Manager — это простой и адаптивный трекер за
 
 ```bash
 # Клонирование репозитория
-git clone https://github.com/your-username/task-manager.git
+git clone https://github.com/Llitvinchuk/task-manager.git
 
 # Установка зависимостей
 cd task-manager
