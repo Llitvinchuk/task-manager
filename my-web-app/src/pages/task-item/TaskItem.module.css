@@ -17,3 +17,7 @@
   gap: 8px;
   justify-content: space-between;
 }
+
+.date {
+  margin: 12px 0;
+}

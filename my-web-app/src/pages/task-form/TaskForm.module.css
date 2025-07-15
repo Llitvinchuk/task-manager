@@ -1,0 +1,48 @@
+.formContainer {
+  max-width: 600px;
+  margin: 40px auto;
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  background-color: #fff;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+}
+
+.formContainer h2 {
+  margin-bottom: 8px;
+  font-size: 24px;
+  font-weight: 600;
+  color: #1f1f1f;
+  text-align: center;
+}
+
+.actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 12px;
+  margin-top: 8px;
+}
+
+.errorText {
+  color: red;
+  font-size: 12px;
+  margin-top: 4px;
+}
+
+@media (max-width: 768px) {
+  .formContainer {
+    padding: 16px;
+    border-radius: 8px;
+  }
+
+  .actions {
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .actions button {
+    width: 100%;
+  }
+}
