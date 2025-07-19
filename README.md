@@ -32,6 +32,7 @@ git clone https://github.com/your-username/task-manager.git
 
 # Установка зависимостей
 cd task-manager
+cd my-web-app
 npm install
 
 # Запуск проекта
