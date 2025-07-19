@@ -3,7 +3,7 @@
   "private": true,
   "version": "0.0.0",
   "type": "module",
-  "homepage": "https://Llitvinchuk.github.io/task-manager",
+  "homepage": "https://llitvinchuk.github.io/task-manager",
   "scripts": {
     "dev": "vite",
     "build": "tsc -b && vite build",
@@ -11,7 +11,7 @@
     "format": "prettier --write .",
     "preview": "vite preview",
     "predeploy": "npm run build",
-    "deploy": "gh-pages -d dist"
+    "deploy": "gh-pages -d dist -b gh-pages"
   },
   "dependencies": {
     "@admiral-ds/react-ui": "^8.52.2",

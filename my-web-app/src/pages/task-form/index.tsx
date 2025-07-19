@@ -2,8 +2,8 @@ import { useState, useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { TextInput, TextArea, Select, Option, Button } from '@admiral-ds/react-ui';
 import { v4 as uuidv4 } from 'uuid';
-import { useTaskStore } from '../../entities/task/models/taskStore';
 import type { Task } from '../../entities/task/models/Task';
+import * as api from '@/shared/api/fakeApi';
 import styles from './TaskForm.module.css';
 
 const categories: Task['category'][] = ['Bug', 'Feature', 'Documentation', 'Refactor', 'Test'];
@@ -14,31 +14,28 @@ export const TaskForm = () => {
   const navigate = useNavigate();
   const { id } = useParams();
 
-  const tasks = useTaskStore(state => state.tasks);
-  const createTask = useTaskStore(state => state.createTask);
-  const updateTask = useTaskStore(state => state.updateTask);
-
   const [form, setForm] = useState<Task | null>(null);
   const [titleError, setTitleError] = useState<string | null>(null);
 
   useEffect(() => {
-    if (id) {
-      const existing = tasks.find(t => t.id === id);
-      if (existing) {
-        setForm(existing);
+    const fetchTask = async () => {
+      if (id) {
+        const task = await api.getTaskById(id);
+        if (task) setForm(task);
+      } else {
+        setForm({
+          id: uuidv4(),
+          title: '',
+          description: '',
+          category: 'Feature',
+          status: 'To Do',
+          priority: 'Medium',
+          createdAt: new Date().toISOString(),
+        });
       }
-    } else {
-      setForm({
-        id: uuidv4(),
-        title: '',
-        description: '',
-        category: 'Feature',
-        status: 'To Do',
-        priority: 'Medium',
-        createdAt: new Date().toISOString(),
-      });
-    }
-  }, [id, tasks]);
+    };
+    fetchTask();
+  }, [id]);
 
   const handleChange = (field: keyof Task, value: string) => {
     if (!form) return;
@@ -48,7 +45,7 @@ export const TaskForm = () => {
     }
   };
 
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
     if (!form) return;
 
     if (!form.title.trim()) {
@@ -56,12 +53,16 @@ export const TaskForm = () => {
       return;
     }
 
-    if (id) {
-      updateTask(form);
-    } else {
-      createTask(form);
+    try {
+      if (id) {
+        await api.updateTask(id, form);
+      } else {
+        await api.createTask(form);
+      }
+      navigate('/');
+    } catch (error) {
+      console.error('Ошибка при сохранении задачи:', error);
     }
-    navigate('/');
   };
 
   if (!form) return null;
